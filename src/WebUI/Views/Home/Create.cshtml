@@ -1,0 +1,97 @@
+﻿@model VisitCreateModel
+
+@{
+    ViewBag.title = "Yeni Ziyaret Oluştur";
+}
+
+<section class="content">
+    <div class="row">
+        <div class="col-md-6">
+            <div class="box box-info">
+                <div class="box-header with-border">
+                    <h3 class="box-title">@ViewBag.title</h3>
+                </div>
+                <!-- /.box-header -->
+                <!-- form start -->
+                <form class="form-horizontal" method="post" action="@Url.Action("Create","Home")">
+                    <div class="box-body">
+                        <div class="form-group">
+                            @Html.LabelFor(x => x.AccountId, new { @class = "col-sm-3 control-label" })
+
+                            <div class="col-sm-9">
+                                @Html.DropDownListFor(x => x.AccountId, new List<SelectListItem>(), new { @class = "form-control select2" })
+                                @Html.ValidationMessageFor(x => x.AccountId)
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(x => x.IntendedDate, new { @class = "col-sm-3 control-label" })
+
+                            <div class="col-sm-9">
+                                <div class="input-group date">
+                                    <div class="input-group-addon">
+                                        <i class="fa fa-calendar"></i>
+                                    </div>
+                                    @Html.TextBoxFor(x => x.IntendedDate, "{0:dd.MM.yyyy}", new { @class = "form-control pull-right datepicker" })
+                                </div>
+                                @Html.ValidationMessageFor(x => x.IntendedDate)
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(x => x.VisitDate, new { @class = "col-sm-3 control-label" })
+
+                            <div class="col-sm-9">
+                                <div class="input-group date">
+                                    <div class="input-group-addon">
+                                        <i class="fa fa-calendar"></i>
+                                    </div>
+                                    @Html.TextBoxFor(x => x.VisitDate, "{0:dd.MM.yyyy}", new { @class = "form-control pull-right datepickerforbeforedates" })
+                                </div>
+                                @Html.ValidationMessageFor(x => x.VisitDate)
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(x => x.Description, new { @class = "col-sm-3 control-label" })
+
+                            <div class="col-sm-9">
+                                @Html.TextAreaFor(x => x.Description, new { @class = "form-control" })
+                                @Html.ValidationMessageFor(x => x.Description)
+                            </div>
+                        </div>
+                    </div>
+                    <!-- /.box-body -->
+                    <div class="box-footer">
+                        <a href="@Url.Action("Index","Home")" class="btn btn-default">Geri Dön</a>
+                        <button type="submit" class="btn btn-info pull-right">Kaydet</button>
+                    </div>
+                    <!-- /.box-footer -->
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+@section scripts{
+    <script>
+
+        $('#AccountId').select2({
+            placeholder: 'Lütfen Seçiniz',
+            minimumResultsForSearch: Infinity,
+            ajax: {
+                url: '/Home/GetAccounts',
+                processResults: function (data) {
+                    return {
+                        results: data.map(item => { return { id: item.id, text: item.name } })
+                    };
+                }
+            }
+        });
+
+        $('.datepickerforbeforedates').datepicker({
+            autoclose: true,
+            language: "tr-TR",
+            endDate: '+1d',
+            datesDisabled: '+1d',
+        })
+    </script>
+}

@@ -1,0 +1,93 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>@(ViewBag.title != null ? $"{ViewBag.title} | Visitation" : "Visitation")</title>
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+    <link rel="stylesheet" href="/adminlte/bower_components/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/adminlte/bower_components/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/adminlte/dist/css/AdminLTE.min.css">
+    <link rel="stylesheet" href="/adminlte/dist/css/skins/skin-blue.min.css">
+    <link rel="stylesheet" href="/adminlte/bower_components/select2/dist/css/select2.min.css">
+    <link rel="stylesheet" href="/adminlte/bower_components/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
+
+    <style>
+        .field-validation-error {
+            color: red
+        }
+    </style>
+
+    @RenderSection("css", false)
+
+
+</head>
+<body class="hold-transition skin-blue sidebar-mini">
+    <div class="wrapper">
+
+        @await Html.PartialAsync("Navbar")
+
+        @await Html.PartialAsync("Sidebar")
+
+        <div class="content-wrapper">
+            @RenderBody()
+        </div>
+
+        @await Html.PartialAsync("Footer")
+    </div>
+
+    <div class="modal fade" id="confirm-delete-modal" tabindex="-1" role="dialog" aria-labelledby="confirm-delete-label" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    Emin misiniz?
+                </div>
+                <div class="modal-body">
+                    Seçtiğiniz veriyi silmek istediğinize emin misiniz?
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">İptal</button>
+                    <a class="btn btn-danger btn-ok">Evet</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="/adminlte/bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="/adminlte/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script src="/adminlte/dist/js/adminlte.min.js"></script>
+    <script src="/adminlte/bower_components/select2/dist/js/select2.full.min.js"></script>
+    <script src="/adminlte/bower_components/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js"></script>
+    <script src="/adminlte/bower_components/bootstrap-datepicker/dist/locales/bootstrap-datepicker.tr.min.js"></script>
+
+    @await Html.PartialAsync("~/Views/Shared/_ValidationScriptsPartial.cshtml")
+
+    <script>
+        var pathname = window.location.pathname;
+
+        $(".sidebar-menu li a[href='" + pathname + "']").closest("li").addClass("active");
+
+        $(".select2").select2();
+
+        $('.datepicker').datepicker({
+            autoclose: true,
+            language: "tr-TR"
+        });
+
+        $('#confirm-delete-modal').on('show.bs.modal', function (e) {
+            var url = $(e.relatedTarget).data('href');
+            $(this).find('.btn-ok').click(function () {
+                $(this).addClass('disabled');
+                $.post(url, {}, function (res) {
+                    location.reload();
+                });
+            });
+        });
+
+    </script>
+
+    @RenderSection("scripts", false)
+
+</body>
+</html>

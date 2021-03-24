@@ -1,0 +1,16 @@
+﻿[
+  {
+    "Id": 1,
+    "Name": "Dunder Mifflin Paper Company",
+    "Address": "Scranton, Pennsylvania",
+    "Phone": "1231231212",
+    "ResponsiblePerson": "Michael Scott"
+  },
+  {
+    "Id": 2,
+    "Name": "Los Pollos Hermanos",
+    "Address": "Albuquerque, New Mexico",
+    "Phone": "5554443322",
+    "ResponsiblePerson": "Gus Fring"
+  }
+]

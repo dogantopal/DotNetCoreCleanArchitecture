@@ -1,0 +1,85 @@
+﻿@{
+    ViewData["Title"] = "Ziyaretler";
+}
+
+@section css
+{
+    <link rel="stylesheet" href="//cdn.datatables.net/1.10.22/css/jquery.dataTables.min.css" />
+}
+
+<section class="content">
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="box">
+                <div class="box-header">
+                    <h3 class="box-title">Tüm Ziyaretler</h3>
+                </div>
+                <div class="box-body">
+                    <table id="datatable" class="table table-bordered table-hover">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Müşteri Adı</th>
+                                <th>Planlanan Tarih</th>
+                                <th>Ziyaretçi</th>
+                                <th>Ziyaret Tarihi</th>
+                                <th>Güncelle</th>
+                                <th>Sil</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+
+@section scripts{
+    <script src="//cdn.datatables.net/1.10.22/js/jquery.dataTables.min.js"></script>
+    <script>
+    $(document).ready(function () {
+
+            $('#datatable').DataTable({
+                "processing": true,
+                "serverSide": true,
+                "filter": true,
+                "orderMulti": false,
+                "language": {
+                    "url": "//cdn.datatables.net/plug-ins/1.10.21/i18n/Turkish.json"
+                },
+                "ajax": {
+                    "url": "/Home/GetVisits",
+                    "type": "POST",
+                    "datatype": "json"
+                },
+                "columnDefs": [{
+                    "targets": [0],
+                    "visible": false,
+                    "searchable": false
+                }],
+                "columns": [
+                    { "data": "id", "name": "id", "autoWidth": true },
+                    { "data": "accountName", "name": "accountName", "autoWidth": true },
+                    { "data": "intendedDate", "name": "intendedDate", "autoWidth": true },
+                    { "data": "userFullName", "name": "userFullName", "autoWidth": true },
+                    { "data": "visitDate", "name": "visitDate", "autoWidth": true },
+                    {
+                        "render": function (data, type, row, meta) {
+                            return '<a class="btn btn-warning" href="/Home/Update/' + row.id + '">Düzenle</a>';
+                        }
+                    },
+                    {
+                        "render": function (data, type, row, meta) {
+                            return '<button data-toggle="modal" data-target="#confirm-delete-modal" data-href="/Home/Delete/' + row.id +'" class="btn btn-danger">Sil</button>';
+                        }
+                    }
+                ]
+            });
+
+    });
+    </script>
+}
