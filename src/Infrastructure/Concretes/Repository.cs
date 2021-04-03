@@ -47,12 +47,12 @@ namespace Infrastructure.Concretes
             return await Context.Set<TEntity>().FirstOrDefaultAsync(predicate);
         }
 
-        public async Task<List<TEntity>> GetAll()
+        public async Task<List<TEntity>> GetAllAsync()
         {
             return await Context.Set<TEntity>().ToListAsync();
         }
 
-        public async Task<List<TEntity>> GetAll(Expression<Func<TEntity, bool>> predicate)
+        public async Task<List<TEntity>> GetAllAsync(Expression<Func<TEntity, bool>> predicate)
         {
             return await Context.Set<TEntity>().Where(predicate).ToListAsync();
         }

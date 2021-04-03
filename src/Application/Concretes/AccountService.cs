@@ -21,7 +21,7 @@ namespace Application.Concretes
 
         public async Task<List<AccountDTO>> GetAccountsAsync()
         {
-            var accounts = await _unitOfWork.Accounts.GetAll();
+            var accounts = await _unitOfWork.Accounts.GetAllAsync();
 
             var output = _mapper.Map<List<AccountDTO>>(accounts);
 

@@ -21,7 +21,7 @@ namespace Application.Concretes
 
         public async Task<List<UserDTO>> GetUsersAsync()
         {
-            var employees = await _unitOfWork.Users.GetAll();
+            var employees = await _unitOfWork.Users.GetAllAsync();
 
             var output = _mapper.Map<List<UserDTO>>(employees);
 

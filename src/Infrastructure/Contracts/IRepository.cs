@@ -9,8 +9,8 @@ namespace Infrastructure.Contracts
     {
         Task<TEntity> GetAsync(int id);
         Task<TEntity> GetAsync(Expression<Func<TEntity, bool>> predicate);
-        Task<List<TEntity>> GetAll();
-        Task<List<TEntity>> GetAll(Expression<Func<TEntity, bool>> predicate);
+        Task<List<TEntity>> GetAllAsync();
+        Task<List<TEntity>> GetAllAsync(Expression<Func<TEntity, bool>> predicate);
 
         void Add(TEntity entity);
         void AddRange(IEnumerable<TEntity> entities);
